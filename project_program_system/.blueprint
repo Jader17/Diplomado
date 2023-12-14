@@ -1,0 +1,60 @@
+created:
+    - app/Http/Controllers/ProgramController.php
+    - app/Http/Controllers/UserController.php
+    - app/Http/Controllers/StudentController.php
+    - app/Http/Controllers/CohortController.php
+    - app/Http/Controllers/TeacherController.php
+    - database/factories/ProgramFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/StudentFactory.php
+    - database/factories/CohortFactory.php
+    - database/factories/TeacherFactory.php
+    - database/factories/ProgramTeacherFactory.php
+    - database/migrations/2023_12_13_004557_create_programs_table.php
+    - database/migrations/2023_12_13_004558_create_users_table.php
+    - database/migrations/2023_12_13_004559_create_students_table.php
+    - database/migrations/2023_12_13_004600_create_cohorts_table.php
+    - database/migrations/2023_12_13_004601_create_teachers_table.php
+    - database/migrations/2023_12_13_004602_create_program_teachers_table.php
+    - database/migrations/2023_12_13_004603_create_program_teacher_table.php
+    - app/Models/Program.php
+    - app/Models/User.php
+    - app/Models/Student.php
+    - app/Models/Cohort.php
+    - app/Models/Teacher.php
+    - app/Models/ProgramTeacher.php
+    - tests/Feature/Http/Controllers/ProgramControllerTest.php
+    - tests/Feature/Http/Controllers/UserControllerTest.php
+    - tests/Feature/Http/Controllers/StudentControllerTest.php
+    - tests/Feature/Http/Controllers/CohortControllerTest.php
+    - tests/Feature/Http/Controllers/TeacherControllerTest.php
+updated:
+    - routes/web.php
+skipped:
+    - resources/views/program/index.blade.php
+    - resources/views/program/create.blade.php
+    - resources/views/program/show.blade.php
+    - resources/views/program/edit.blade.php
+    - resources/views/user/index.blade.php
+    - resources/views/user/create.blade.php
+    - resources/views/user/show.blade.php
+    - resources/views/user/edit.blade.php
+    - resources/views/student/index.blade.php
+    - resources/views/student/create.blade.php
+    - resources/views/student/show.blade.php
+    - resources/views/student/edit.blade.php
+    - resources/views/cohort/index.blade.php
+    - resources/views/cohort/create.blade.php
+    - resources/views/cohort/show.blade.php
+    - resources/views/cohort/edit.blade.php
+    - resources/views/teacher/index.blade.php
+    - resources/views/teacher/create.blade.php
+    - resources/views/teacher/show.blade.php
+    - resources/views/teacher/edit.blade.php
+models:
+    Program: { code: 'string:50', description: text, logo: 'string:255', email: 'string:255', phone: 'string:20', work_lines: 'string:45', resolution: 'string:255', register_date: date, modality: 'string:60', user_id: 'id foreign:users', relationships: { belongsTo: App\Models\User, hasMany: Cohort, BelongsToMany: Teacher } }
+    User: { identification: 'string:15', name: 'string:255', gender: 'string:50', address: 'string:255', phone: 'string:15', email: 'string:255', birth_date: date, photo: 'string:255', link_date: date, agreement: 'string:255', password: 'string:45', role: 'string:50', job: 'string:100', relationships: { hasMany: Program } }
+    Student: { identification: 'string:15', name: 'string:255', gender: 'string:50', address: 'string:255', phone: 'string:15', email: 'string:255', birth_date: date, photo: 'string:255', student_code: 'string:255', semester: int, 'civil:status': 'string:45', join_date: date, egress_date: date, cohort: int, cohort_id: 'id foreign:cohorts', relationships: { belongsTo: App\Models\Cohort } }
+    Cohort: { code: 'string:15', name: 'string:255', start_date: date, end_date: date, total_students: int, program_id: 'id foreign:program', relationships: { belongsTo: App\Models\Program, hasMany: Student } }
+    Teacher: { identification: 'sting:15', name: 'string:255', gender: 'string:50', address: 'string:255', phone: 'string:15', email: 'string:255', birth_date: date, photo: 'string:255', academic_formation: text, knowledge_areas: text, relationships: { BelongsToMany: Program } }
+    ProgramTeacher: { program_id: 'id foreign:program', teacher_id: 'id foreign:teacher' }

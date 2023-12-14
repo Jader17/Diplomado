@@ -1,0 +1,92 @@
+models:
+  Program:
+    code: string:50
+    description: text
+    logo: string:255
+    email: string:255
+    phone: string:20
+    work_lines: string:45
+    resolution: string:255
+    register_date: date
+    modality: string:60
+    user_id: id foreign:users
+    relationships:
+      belongsTo: User
+      hasMany: Cohort
+      BelongsToMany: Teacher
+
+  User:
+    identification: string:15
+    name: string:255
+    gender: string:50
+    address: string:255
+    phone: string:15
+    email: string:255
+    birth_date: date
+    photo: string:255
+    link_date: date
+    agreement: string:255
+    password: string:45
+    role: string:50
+    job: string:100
+    relationships:
+      hasMany: Program
+
+  Student:
+    identification: string:15
+    name: string:255
+    gender: string:50
+    address: string:255
+    phone: string:15
+    email: string:255
+    birth_date: date
+    photo: string:255
+    student_code: string:255
+    semester: int
+    civil_status: string:45
+    join_date: date
+    egress_date: date
+    cohort: int
+    cohort_id: id foreign:cohorts
+    relationships:
+      belongsTo: Cohort
+
+  Cohort:
+    code: string:15
+    name: string:255
+    start_date: date
+    end_date: date
+    total_students: int
+    program_id: id foreign:program
+    relationships:
+      belongsTo: Program
+      hasMany: Student
+
+  Teacher:
+    identification: sting:15
+    name: string:255
+    gender: string:50
+    address: string:255
+    phone: string:15
+    email: string:255
+    birth_date: date
+    photo: string:255
+    academic_formation: text
+    knowledge_areas: text
+    relationships:
+      BelongsToMany: Program
+
+  ProgramTeacher:
+    program_id: id foreign:program
+    teacher_id: id foreign:teacher
+
+controllers:
+  Program: resource
+
+  User: resource
+
+  Student: resource
+
+  Cohort: resource
+
+  Teacher: resource

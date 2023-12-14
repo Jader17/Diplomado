@@ -1,0 +1,134 @@
+models:
+  Program:
+    code: string:50
+    description: text
+    logo: string:255
+    email: string:255
+    phone: string:20
+    work_lines: string:45
+    resolution: string:255
+    register_date: date
+    modality: string:60
+    user_id: id foreign:users
+    relationships:
+      belongsTo: App\Models\User
+      hasMany: Cohort
+      hasMany: Teacher
+
+  User:
+    identification: string:15
+    name: string:255
+    gender: string:50
+    address: string:255
+    phone: string:15
+    email: string:255
+    birth_date: date
+    photo: string:255
+    link_date: date
+    agreement: string:255
+    password: string:45
+    role: string:50
+    job: string:100
+    relationships:
+      hasMany: Program
+
+  Student:
+    identification: string:15
+    name: string:255
+    gender: string:50
+    address: string:255
+    phone: string:15
+    email: string:255
+    birth_date: date
+    photo: string:255
+    student_code: string:255
+    semester: int
+    civil:status: string:45
+    join_date: date
+    egress_date: date
+    cohort: int
+    cohort_id: id foreign:cohorts
+    relationships:
+      belongsTo: App\Models\Cohort
+
+  Cohort:
+    code: string:15
+    name: string:255
+    start_date: date
+    end_date: date
+    total_students: int
+    program_id: id foreign:program
+    relationships:
+      belongsTo: App\Models\Program
+      hasMany: Student
+
+  Teacher:
+    identification: sting:15
+    name: string:255
+    gender: string:50
+    address: string:255
+    phone: string:15
+    email: string:255
+    birth_date: date
+    photo: string:255
+    academic_formation: text
+    knowledge_areas: text
+    relationships:
+      hasMany: Program
+  
+  ProgramTeacher:
+    program_id: id foreign:program
+    teacher_id: id foreign:teacher
+
+controllers:
+  Program:
+    index:
+      query: get:programs
+      render: admin.program.index with:programs
+
+    create:
+      query: get:coordinators
+      render: admin.program.create with:coordinators
+
+    store:
+      validate: program
+      save: program
+      redirect: admin.program.index
+    
+    edit:
+      render: admin.program.edit with:program
+
+    update:
+      validate: program
+      update: program
+      redirect: admin.program.index
+    
+    destroy:
+      delete: program
+      redirect: admin.program.index
+
+  User:
+  index:
+      query: get:users
+      render: admin.user.index with:programs
+
+    create:
+      query: get:coordinators
+      render: admin.user.create with:coordinators
+
+    store:
+      validate: user
+      save: user
+      redirect: admin.user.index
+    
+    edit:
+      render: admin.user.edit with:user
+
+    update:
+      validate: user
+      update: user
+      redirect: admin.user.index
+    
+    destroy:
+      delete: user
+      redirect: admin.user.index    
