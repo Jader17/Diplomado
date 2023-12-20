@@ -45,6 +45,7 @@
                                                     <strong>Telefono:</strong>&nbsp;{{ $program->phone }} <br>
                                                     <strong>Modalidad:</strong>&nbsp;{{ $program->modality }} <br>
                                                     <strong>Fecha de registro:</strong>&nbsp;{{ $program->register_date }} <br>
+                                                    <strong>Coordinador:</strong>&nbsp;{{ $program->user->name }} <br>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center ">

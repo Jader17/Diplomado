@@ -30,7 +30,7 @@ class ProgramFactory extends Factory
 
         return [
             'code' => $this->faker->numberBetween(1000, 9999),
-            'title' => $this->faker->text(200),
+            'title' => $this->faker->text(100),
             'description' => $this->faker->text,
             'logo' => $faker->imageUrl(300, 300),
             'email' => $this->faker->safeEmail,

@@ -30,6 +30,7 @@
                                         <th>Información personal</th>
                                         <th>Formación Académica</th>
                                         <th>Áreas de conocimiento</th>
+                                        <th>Programas</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -52,6 +53,15 @@
                                                 <td> {{ $teacher->academic_formation }} </td>
                                                 <td> {{ $teacher->knowledge_areas }} </td>
                                                 <td>
+                                                    <ul>
+                                                        @foreach ($teacher->programs as $program)
+                                                            <li>
+                                                                {{ $program->title }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+                                                <td>
                                                     <div class="d-flex justify-content-center ">
                                                         <a href="{{ route('teacher.edit', $teacher) }}" class="btn btn-info">
                                                             <i class="fas fa-edit nav-icon"></i>
@@ -66,12 +76,10 @@
                                                             </button>
                                                         </form>
                                                     </div>
-
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @endisset
-
                                 </tbody>
                             </table>
                         </div>

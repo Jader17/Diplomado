@@ -43,7 +43,7 @@ models:
     photo: string:255
     student_code: string:255
     semester: int
-    civil:status: string:45
+    civil_status: string:45
     join_date: date
     egress_date: date
     cohort: int
@@ -75,7 +75,7 @@ models:
     knowledge_areas: text
     relationships:
       hasMany: Program
-  
+
   ProgramTeacher:
     program_id: id foreign:program
     teacher_id: id foreign:teacher
@@ -94,7 +94,7 @@ controllers:
       validate: program
       save: program
       redirect: admin.program.index
-    
+
     edit:
       render: admin.program.edit with:program
 
@@ -102,7 +102,7 @@ controllers:
       validate: program
       update: program
       redirect: admin.program.index
-    
+
     destroy:
       delete: program
       redirect: admin.program.index
@@ -120,7 +120,7 @@ controllers:
       validate: user
       save: user
       redirect: admin.user.index
-    
+
     edit:
       render: admin.user.edit with:user
 
@@ -128,7 +128,7 @@ controllers:
       validate: user
       update: user
       redirect: admin.user.index
-    
+
     destroy:
       delete: user
-      redirect: admin.user.index    
+      redirect: admin.user.index

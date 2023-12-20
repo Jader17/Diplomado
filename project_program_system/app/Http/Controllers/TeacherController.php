@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TeacherStoreRequest;
-use App\Http\Requests\TeacherUpdateRequest;
+use App\Models\Program;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
@@ -23,16 +22,33 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('admin.teacher.create', ['teacher' => null]);
+        $programs = Program::get();
+        return view('admin.teacher.create', ['programs' => $programs]);
     }
 
-    /**
-     * @param \App\Http\Requests\TeacherStoreRequest $request
-     */
-    public function store(TeacherStoreRequest $request)
+    public function store(Request $request)
     {
-        $teacher = Teacher::create($request->validated());
+        $request->validate([
+            'identification' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'academic_formation' => ['required', 'string'],
+            'knowledge_areas' => ['required', 'string'],
+            'programs' => 'required|array|min:1',
+        ]);
 
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('public/photos');
+            $request['photo'] = $photoPath;
+        }
+
+        $teacher = Teacher::create($request->all());
+        $teacher->programs()->attach($request->input('programs'));
         return redirect()->route('teacher.index');
     }
 
@@ -49,19 +65,38 @@ class TeacherController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Teacher $teacher
      */
-    public function edit(Request $request, Teacher $teacher)
+    public function edit(Teacher $teacher)
     {
-        return view('admin.teacher.edit', compact('teacher'));
+        $programs = Program::get();
+        return view('admin.teacher.edit', ['teacher' => $teacher, 'programs' => $programs]);
     }
 
     /**
-     * @param \App\Http\Requests\TeacherUpdateRequest $request
+     *
      * @param \App\Models\Teacher $teacher
      */
-    public function update(TeacherUpdateRequest $request, Teacher $teacher)
+    public function update(Request $request, Teacher $teacher)
     {
-        $teacher->update($request->validated());
 
+        $request->validate([
+            'identification' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            'academic_formation' => ['required', 'string'],
+            'knowledge_areas' => ['required', 'string'],
+            'programs' => 'required|array|min:1',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('public/photos');
+            $request['photo'] = $photoPath;
+        }
+
+        $teacher->update($request->all());
         return redirect()->route('teacher.index');
     }
 

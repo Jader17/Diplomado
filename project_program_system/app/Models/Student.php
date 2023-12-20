@@ -25,10 +25,9 @@ class Student extends Model
         'photo',
         'student_code',
         'semester',
-        'civil:status',
+        'civil_status',
         'join_date',
         'egress_date',
-        'cohort',
         'cohort_id',
     ];
 

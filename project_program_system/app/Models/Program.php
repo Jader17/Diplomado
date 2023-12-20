@@ -16,6 +16,7 @@ class Program extends Model
      */
     protected $fillable = [
         'code',
+        'title',
         'description',
         'logo',
         'email',
@@ -52,6 +53,6 @@ class Program extends Model
 
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class);
+        return $this->belongsToMany(Teacher::class, 'program_teachers');
     }
 }

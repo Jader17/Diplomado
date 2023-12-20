@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,12 +26,25 @@ class UserController extends Controller
         return view('admin.user.create', ['user' => null]);
     }
 
-    /**
-     * @param \App\Http\Requests\UserStoreRequest $request
-     */
-    public function store(UserStoreRequest $request)
+    public function store(Request $request)
     {
-        $user = User::create($request->validated());
+        $request->validate([
+            'identification' => ['required', 'string', 'max:15'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'link_date' => ['required', 'date'],
+            // 'agreement' => ['required', 'string', 'max:255'],
+            // 'password' => ['required', 'password', 'max:45', 'confirmed'],
+            'role' => ['required', 'string', 'max:50'],
+            'job' => ['required', 'string', 'max:100'],
+        ]);
+        $user = User::create($request->all());
+
 
         return redirect()->route('user.index');
     }
@@ -56,15 +68,39 @@ class UserController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\UserUpdateRequest $request
      * @param \App\Models\User $user
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $user->update($request->validated());
+        $request->validate([
+            'identification' => ['required', 'string', 'max:15'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            'link_date' => ['required', 'date'],
+            'password' => ['nullable', 'min:8', 'confirmed'],
+            'role' => ['required', 'string', 'max:50'],
+            'job' => ['required', 'string', 'max:100'],
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('public/photos');
+            $user->photo = $photoPath;
+        }
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->update($request->except('photo', 'password'));
 
         return redirect()->route('user.index');
     }
+
+
 
     /**
      * @param \Illuminate\Http\Request $request

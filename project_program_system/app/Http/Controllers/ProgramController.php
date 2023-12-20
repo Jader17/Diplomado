@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProgramStoreRequest;
-use App\Http\Requests\ProgramUpdateRequest;
+use App\Models\User;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,6 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         $programs = Program::all();
-
         return view('admin.program.index', compact('programs'));
     }
 
@@ -24,15 +22,28 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        return view('admin.program.create', ['program' => null]);
+        $users = User::get()->where('role', '=', 'Coordinador');
+        return view('admin.program.create', ['users' => $users]);
     }
 
-    /**
-     * @param \App\Http\Requests\ProgramStoreRequest $request
-     */
-    public function store(ProgramStoreRequest $request)
+    public function store(Request $request)
     {
-        $program = Program::create($request->validated());
+
+        $request->validate([
+            'code' => ['required', 'string', 'max:50'],
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'logo' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            'work_lines' => ['required', 'string', 'max:45'],
+            'resolution' => ['required', 'string', 'max:255'],
+            'register_date' => ['required', 'date'],
+            'modality' => ['required', 'string', 'max:60'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+
+        $program = Program::create($request->all());
         return redirect()->route('program.index');
     }
 
@@ -51,17 +62,28 @@ class ProgramController extends Controller
      */
     public function edit(Request $request, Program $program)
     {
-        return view('admin.program.edit', compact('program'));
+        $users = User::get()->where('role', '=', 'Coordinador');
+        return view('admin.program.edit', ['program' => $program, 'users' => $users]);
     }
 
     /**
-     * @param \App\Http\Requests\ProgramUpdateRequest $request
      * @param \App\Models\Program $program
      */
-    public function update(ProgramUpdateRequest $request, Program $program)
+    public function update(Request $request, Program $program)
     {
-        $program->update($request->validated());
-
+        $request->validate([
+            'code' => ['required', 'string', 'max:50'],
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            //'work_lines' => ['required', 'string', 'max:45'],
+            'resolution' => ['required', 'string', 'max:255'],
+            'register_date' => ['required', 'date'],
+            'modality' => ['required', 'string', 'max:60'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+        $program->update($request->all());
         return redirect()->route('program.index');
     }
 

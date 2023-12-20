@@ -9,7 +9,7 @@
         <div class="offset-3 col-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('teacher.store') }}" method="POST">
+                    <form action="{{ route('teacher.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- name -->
                         <div class="form-group">
@@ -64,10 +64,10 @@
                         <!-- birth_date -->
                         <div class="form-group">
                             <label class="form-label" for="birth_date">Fecha de nacimiento:</label>
-                            <input class="form-control" type="date" id="birth_date" name="birth_date" min="2003-01-01"
+                            <input class="form-control" type="date" id="birth_date" name="birth_date" min="1990-01-01"
                                 max="{{ date('Y-m-d') }}" placeholder="Fecha de nacimiento"
                                 value="{{ old('birth_date') }}">
-                            @error('bith_date')
+                            @error('birth_date')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
@@ -116,6 +116,20 @@
                             @enderror
                         </div>
                         <br />
+
+                        <!-- program -->
+                        <div class="form-group">
+                            <label class="form-label" for="program_id">Programa:</label>
+                            @foreach ($programs as $program)
+                                <label for="program_id" style="font-weight: normal;">
+                                    <input type="checkbox" name="programs[]" value="{{ $program->id }}"
+                                        id="program_id"> {{ $program->title }}
+                                </label>
+                            @endforeach
+                            @error('programs')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <button class="btn btn-primary float-right" type="submit">Enviar</button>
                     </form>
                 </div>

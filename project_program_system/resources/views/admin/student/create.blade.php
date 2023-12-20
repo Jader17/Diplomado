@@ -11,6 +11,48 @@
                 <div class="card-body">
                     <form action="{{ route('student.store') }}" method="POST">
                         @csrf
+                        <!-- program -->
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-2 col-form-label" for="race">Programa:</label>
+                            <div class="col-sm-8">
+                                <select id="program_id" name="program_id" class="form-control">
+                                    @foreach ($programs as $program)
+                                        <option value="{{ $program->id }}"
+                                            @isset($code)
+                                                @selected($code == $program->id)
+                                            @else
+                                                @selected(old('program_id') == $program->id)
+                                            @endisset>
+                                            {{ $program->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-info" id="btnBuscar">
+                                    Buscar
+                                </a>
+                            </div>
+                            @error('program_id')
+                                <div class="col-sm-10 offset-sm-2 text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- cohort -->
+                        <div class="form-group">
+                            <label class="form-label" for="race">Cohorte:</label>
+                            <select id="cohort_id" name="cohort_id" class="form-control">
+                                @foreach ($cohorts as $cohort)
+                                    <option value="{{ $cohort->id }}" @selected(old('cohort_id') == $cohort->id)>
+                                        {{ $cohort->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('cohort_id')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- identification -->
                         <div class="form-group">
                             <label class="form-label" for="identification">Identificación:</label>
@@ -65,6 +107,15 @@
                             @enderror
                         </div>
 
+                        <!-- phone -->
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Teléfono:</label>
+                            <input class="form-control" type="phone" id="phone" name="phone"
+                                placeholder="Número de teléfono del profesor" value="{{ old('phone') }}">
+                            @error('phone')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <!-- birth_date -->
                         <div class="form-group">
@@ -72,7 +123,7 @@
                             <input class="form-control" type="date" id="birth_date" name="birth_date" min="2003-01-01"
                                 max="{{ date('Y-m-d') }}" placeholder="Fecha de nacimiento"
                                 value="{{ old('birth_date') }}">
-                            @error('bith_date')
+                            @error('birth_date')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
@@ -115,10 +166,10 @@
 
                         <!-- admission_date -->
                         <div class="form-group">
-                            <label class="form-label" for="admission_date">Fecha de Ingreso:</label>
-                            <input class="form-control" type="date" id="admission_date" name="admission_date"
-                                min="2000-01-01" max="{{ date('Y-m-d') }}" value="{{ old('admission_date') }}">
-                            @error('admission_date')
+                            <label class="form-label" for="join_date">Fecha de Ingreso:</label>
+                            <input class="form-control" type="date" id="join_date" name="join_date" min="2000-01-01"
+                                max="{{ date('Y-m-d') }}" value="{{ old('join_date') }}">
+                            @error('join_date')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
@@ -133,6 +184,16 @@
                             @enderror
                         </div>
 
+                        <!-- photo -->
+                        <div class="form-group">
+                            <label class="form-label" for="photo">Foto:</label>
+                            <input class="form-control" type="file" id="photo" name="photo" accept="image/*">
+                            @error('photo')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <br />
+
                         <br />
                         <button class="btn btn-primary float-right" type="submit">Enviar</button>
                     </form>
@@ -140,4 +201,14 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.getElementById('btnBuscar').addEventListener('click', function() {
+
+            var programId = document.getElementById('program_id').value;
+            var url = "{{ route('getCohorts') }}" + "?program_id=" + programId;
+            window.location.href = url;
+        });
+    </script>
 @endsection

@@ -50,6 +50,31 @@
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <!-- total_students -->
+                        <div class="form-group">
+                            <label class="form-label" for="total_students">Total de estudiantes:</label>
+                            <input class="form-control" type="number" id="total_students" name="total_students"
+                                placeholder="Código de la cohorte" value="{{ old('total_students') }}">
+                            @error('total_students')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- program_id -->
+                        <div class="form-group">
+                            <label class="form-label" for="race">Programa:</label>
+                            <select id="program_id" name="program_id" class="form-control">
+                                @foreach ($programs as $program)
+                                    <option value="{{ $program->id }}" @selected(old('program_id') == $program->id)>{{ $program->title }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('program_id')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <br />
                         <button class="btn btn-primary float-right" type="submit">Enviar</button>
                     </form>

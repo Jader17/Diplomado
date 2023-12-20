@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="form-label" for="identification">Identificación:</label>
                             <input class="form-control" type="text" id="identification" name="identification"
-                                placeholder="Identificación del profesor" value="{{ old('identification') }}">
+                                placeholder="Identificación del usuario" value="{{ old('identification') }}">
                             @error('identification')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label class="form-label" for="name">Nombre:</label>
                             <input class="form-control" type="text" id="name" name="name"
-                                placeholder="Nombre completo del profesor" value="{{ old('name') }}">
+                                placeholder="Nombre completo del usuario" value="{{ old('name') }}">
                             @error('name')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label class="form-label" for="address">Dirección:</label>
                             <input class="form-control" type="text" id="address" name="address"
-                                placeholder="Dirección del profesor" value="{{ old('address') }}">
+                                placeholder="Dirección del usuario" value="{{ old('address') }}">
                             @error('address')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <label class="form-label" for="phone">Teléfono:</label>
                             <input class="form-control" type="phone" id="phone" name="phone"
-                                placeholder="Número de teléfono del profesor" value="{{ old('phone') }}">
+                                placeholder="Número de teléfono del usuario" value="{{ old('phone') }}">
                             @error('phone')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label class="form-label" for="email">Correo Electrónico:</label>
                             <input class="form-control" type="email" id="email" name="email"
-                                placeholder="Correo electrónico del profesor" value="{{ old('email') }}">
+                                placeholder="Correo electrónico del usuario" value="{{ old('email') }}">
                             @error('email')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror

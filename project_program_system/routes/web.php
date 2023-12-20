@@ -29,3 +29,4 @@ Route::resource('user', UserController::class);
 Route::resource('student', StudentController::class);
 Route::resource('cohort', CohortController::class);
 Route::resource('teacher', TeacherController::class);
+Route::get('get_cohorts', [StudentController::class, 'getCohorts'])->name('getCohorts');

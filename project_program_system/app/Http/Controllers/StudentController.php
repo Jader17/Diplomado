@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StudentStoreRequest;
-use App\Http\Requests\StudentUpdateRequest;
+use App\Models\Cohort;
+use App\Models\Program;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -24,15 +24,40 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('admin.student.create', ['student' => null]);
+        $programs = Program::get();
+        $cohorts = $programs[0]->cohorts;
+        return view('admin.student.create', ['programs' => $programs, 'cohorts' => $cohorts]);
     }
 
-    /**
-     * @param \App\Http\Requests\StudentStoreRequest $request
-     */
-    public function store(StudentStoreRequest $request)
+    public function getCohorts(Request $request)
     {
-        $student = Student::create($request->validated());
+        $code = $request->input('program_id');
+        $programs = Program::get();
+        $cohorts = Program::find($code)->cohorts;
+        return view('admin.student.create', ['programs' => $programs, 'cohorts' => $cohorts, 'code' => $code]);
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'identification' => ['required', 'string', 'max:15'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            'photo' => ['required', 'string', 'max:255'],
+            'student_code' => ['required', 'string', 'max:255'],
+            'semester' => ['required', 'string'],
+            'civil_status' => ['required', 'string', 'max:45'],
+            'join_date' => ['required', 'date'],
+            'egress_date' => ['required', 'date'],
+            'cohort_id' => ['required', 'integer', 'exists:cohorts,id'],
+        ]);
+        // dd($request->all());
+        $student = Student::create($request->all());
 
         return redirect()->route('student.index');
     }
@@ -52,14 +77,15 @@ class StudentController extends Controller
      */
     public function edit(Request $request, Student $student)
     {
-        return view('student.edit', compact('student'));
+        $programs = Program::get();
+        $cohorts = $programs[0]->cohorts;
+        return view('admin.student.edit', compact('student', 'programs', 'cohorts'));
     }
 
     /**
-     * @param \App\Http\Requests\StudentUpdateRequest $request
      * @param \App\Models\Student $student
      */
-    public function update(StudentUpdateRequest $request, Student $student)
+    public function update(Request $request, Student $student)
     {
         $student->update($request->validated());
 

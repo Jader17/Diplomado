@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="form-label" for="code">Código:</label>
                             <input class="form-control" type="text" id="code" name="code"
-                                placeholder="Código del profesor" value="{{ old('code') }}">
+                                placeholder="Código del programa" value="{{ old('code') }}">
                             @error('code')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label class="form-label" for="email">Correo Electrónico:</label>
                             <input class="form-control" type="email" id="email" name="email"
-                                placeholder="Correo electrónico del profesor" value="{{ old('email') }}">
+                                placeholder="Correo electrónico del programa" value="{{ old('email') }}">
                             @error('email')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="form-label" for="phone">Teléfono:</label>
                             <input class="form-control" type="phone" id="phone" name="phone"
-                                placeholder="Número de teléfono del profesor" value="{{ old('phone') }}">
+                                placeholder="Número de teléfono del programa" value="{{ old('phone') }}">
                             @error('phone')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -108,6 +108,21 @@
                                     Investigación</option>
                             </select>
                             @error('modality')
+                                <div class="text-xs text-red">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- coordinator -->
+                        <div class="form-group">
+                            <label class="form-label" for="race">Coordinador:</label>
+                            <select id="user_id" name="user_id" class="form-control">
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" @selected(old('user_id') == $user->id)>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
