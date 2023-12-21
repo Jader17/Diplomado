@@ -79,7 +79,6 @@
                 </li>
             </ul>
         </nav>
-        <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -109,12 +108,11 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item menu-open">
-                            <a href="{{ route('teacher.index') }}" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <li class="nav-item">
+                            <a href="{{ route('teacher.index') }}" class="nav-link menu-item">
+                                <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Profesores
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                         </li>
@@ -189,7 +187,7 @@
             <strong>Copyright &copy; 2023 <a href="https://www.udenar.edu.co/">Universidad de Nariño</a>.</strong>
             Todos los derechos reservados.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0.0
+                <b>Version</b> 1.1.5
             </div>
         </footer>
 
@@ -201,6 +199,8 @@
     </div>
     <!-- ./wrapper -->
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- jQuery -->
     <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
