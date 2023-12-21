@@ -138,11 +138,12 @@
                             <label class="form-label" for="birth_date">Fecha de nacimiento:</label>
                             <input class="form-control" type="date" id="birth_date" name="birth_date" min="1990-01-01"
                                 max="{{ date('Y-m-d') }}" placeholder="Fecha de nacimiento"
-                                value="{{ $student->birth_date->format('Y-m-d') }}">
+                                value="{{ $student->birth_date ? $student->birth_date->format('Y-m-d') : '' }}">
                             @error('birth_date')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
+
 
                         <!-- student_code -->
                         <div class="form-group">
@@ -184,23 +185,23 @@
                             @enderror
                         </div>
 
-                        <!-- admission_date -->
+                        <!-- join_date -->
                         <div class="form-group">
-                            <label class="form-label" for="admission_date">Fecha de nacimiento:</label>
-                            <input class="form-control" type="date" id="admission_date" name="admission_date"
+                            <label class="form-label" for="join_date">Fecha de admisión:</label>
+                            <input class="form-control" type="date" id="join_date" name="join_date"
                                 min="1990-01-01" max="{{ date('Y-m-d') }}" placeholder="Fecha de nacimiento"
-                                value="{{ $student->admission_date->format('Y-m-d') }}">
-                            @error('admission_date')
+                                value="{{ $student->join_date ? $student->join_date->format('Y-m-d') : '' }}">
+                            @error('join_date')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <!-- egress_date -->
                         <div class="form-group">
-                            <label class="form-label" for="egress_date">Fecha de nacimiento:</label>
+                            <label class="form-label" for="egress_date">Fecha de egreso:</label>
                             <input class="form-control" type="date" id="egress_date" name="egress_date"
                                 min="1990-01-01" max="{{ date('Y-m-d') }}" placeholder="Fecha de nacimiento"
-                                value="{{ $student->egress_date->format('Y-m-d') }}">
+                                value="{{ $student->egress_date ? $student->egress_date->format('Y-m-d') : '' }}">
                             @error('egress_date')
                                 <div class="text-xs text-red">{{ $message }}</div>
                             @enderror
@@ -211,7 +212,7 @@
                             <label class="form-label" for="photo">Foto:</label>
                             @if ($student->photo)
                                 <div>
-                                    <img src="{{ asset('storage/photos/' . $student->photo) }}" alt="Foto del profesor"
+                                    <img src="{{ asset('storage/photos/' . $student->photo) }}" alt="Foto del estudiante"
                                         style="max-width: 200px;">
                                 </div>
                                 <br>

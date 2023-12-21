@@ -82,12 +82,30 @@ class StudentController extends Controller
         return view('admin.student.edit', compact('student', 'programs', 'cohorts'));
     }
 
+
     /**
      * @param \App\Models\Student $student
      */
     public function update(Request $request, Student $student)
     {
-        $student->update($request->validated());
+        //dd($request->all());
+        $request->validate([
+            'identification' => ['required', 'string', 'max:15'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255'],
+            'birth_date' => ['required', 'date'],
+            'student_code' => ['required', 'string', 'max:255'],
+            'semester' => ['required', 'string'],
+            'civil_status' => ['required', 'string', 'max:45'],
+            'join_date' => ['required', 'date'],
+            'egress_date' => ['required', 'date'],
+            'cohort_id' => ['required', 'integer', 'exists:cohorts,id'],
+        ]);
+        
+        $student->update($request->all());
 
         return redirect()->route('student.index');
     }
